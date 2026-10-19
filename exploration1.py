@@ -9,6 +9,5 @@ v3 = [1,1,3,4]
 A = np.array([v1,v2,v3])
 print("Rank:", np.linalg.matrix_rank(A))
 
-# Test: 5 random vectors in 3D space
-random_vectors = np.random.randn(5, 3)
-print("Random Rank:", np.linalg.matrix_rank(random_vectors))
+# More work
+
