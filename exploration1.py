@@ -10,4 +10,3 @@ A = np.array([v1,v2,v3])
 print("Rank:", np.linalg.matrix_rank(A))
 
 # More work
-
