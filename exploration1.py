@@ -66,8 +66,31 @@ plot(ks, avg_int, type = "b", pch = 19, col = "darkgreen", xlab = "k (number of 
 lines(ks, pmin(ks, n), lty = 2, col = "red")
 legend("bottomright", legend = c("simulation", "min(n,k)"), col = c("darkgreen", "red"), lty = c(1, 2))
 
+# Experiment 3: change n as well, to see how the results depend on both n and k
+# 0/1 entries again because the normal ones are always min(n, k)
+ns <- c(2, 5, 10)
+ks2 <- 1:12
+cols <- c("purple", "darkgreen", "orange")
+
+plot(ks2, ks2, type = "n", xlab = "k (number of vectors)", ylab = "average dimension of span", main = "0/1 entries, n = 2, 5, 10", ylim = c(0, 11))
+for(j in 1:3) {
+  avg_n = c()
+  for(k in ks2) {
+    results = c()
+    for(i in 1:reps) {
+      results[i] = span_dim(ns[j], k, "integer")
+    }
+    avg_n[k] = mean(results)
+  }
+  print(avg_n)
+  lines(ks2, avg_n, type = "b", pch = 19, col = cols[j])
+  lines(ks2, pmin(ks2, ns[j]), lty = 2, col = cols[j])
+}
+legend("topleft", legend = c("n = 2", "n = 5", "n = 10"), col = cols, lty = 1)
+
 # Findings
 # We picked n = 5 and let k run from 1 to 10, doing 100 sets for each k.
+# In Experiment 3 we also tried n = 2 and n = 10 with k from 1 to 12.
 # The random vectors were made two ways: entries from N(0,1) and entries that are just 0 or 1.
 # 1. With normal entries the dimension came out as min(n, k) every time.
 #    A continuous random vector has no chance of landing exactly in the span of the others.
@@ -75,3 +98,5 @@ legend("bottomright", legend = c("simulation", "min(n,k)"), col = c("darkgreen",
 # 3. With 0/1 entries the average dimension is a bit below min(n, k), because you can easily get the same 
 #    vector twice or even a vector of all zeros.
 #    The gap was biggest when k was close to n = 5 and when k is bigger than n we nearly always got the full dimension 5.
+# 4. For small n (n = 2) repeats are really likely so the gap is big, for n = 10 the gap is smaller compared to n but you 
+#    need k a bit bigger than 10 to nearly always get dimension 10.
